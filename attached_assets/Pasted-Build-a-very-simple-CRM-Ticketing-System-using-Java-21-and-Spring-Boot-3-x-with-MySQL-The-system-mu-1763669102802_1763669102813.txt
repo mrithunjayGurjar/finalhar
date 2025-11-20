@@ -1,0 +1,68 @@
+Build a very simple CRM Ticketing System using Java 21 and Spring Boot 3.x with MySQL. The system must support user login, creating customer tickets similar to Jira, adding multiple notes to a ticket (customer reply and team reply), updating ticket status, escalating tickets to the next team or person, and viewing a queue of all active tickets. Use a clean and simple architecture.
+
+Technology requirements:
+Java 21, Spring Boot 3.x, Spring Web, Spring Data JPA, Spring Security with JWT, MySQL, Lombok. Use Java 21 features like records for DTOs. Follow a Controller → Service → Repository structure. All APIs should return JSON responses.
+
+Features required:
+
+User Authentication
+Create a simple login and register system using JWT.
+Endpoints:
+POST /auth/register
+POST /auth/login
+Return JWT token on login.
+User fields: id, name, email, password (hashed), role (USER, AGENT, MANAGER).
+
+Create Ticket
+POST /api/tickets
+Ticket fields: id, title, description, createdBy (user), assignedTo (agent or manager), priority (LOW, MEDIUM, HIGH, CRITICAL), status (OPEN, IN_PROGRESS, ESCALATED, RESOLVED, CLOSED), createdAt, updatedAt.
+
+Ticket Notes System
+A ticket can have multiple notes.
+Note fields: id, ticketId, author, message, timestamp, type (CUSTOMER_REPLY or TEAM_REPLY).
+Endpoints:
+POST /api/tickets/{id}/notes
+GET /api/tickets/{id}/notes
+
+Ticket Status Updates
+PUT /api/tickets/{id}/status
+Request body contains a "status" field.
+Allow valid status transitions: OPEN → IN_PROGRESS → ESCALATED → RESOLVED → CLOSED.
+
+Escalation Feature
+PUT /api/tickets/{id}/escalate
+Escalate logic:
+If assignedTo has role USER, escalate to AGENT.
+If assignedTo has role AGENT, escalate to MANAGER.
+If assignedTo is MANAGER, keep assignedTo the same but status becomes ESCALATED.
+
+Ticket Queue (Active Tickets List)
+GET /api/tickets/active
+Return all tickets where status is not CLOSED.
+Include fields: id, title, priority, status, assignedTo name, lastUpdated.
+
+Minimal Frontend (optional)
+Create simple HTML plus JavaScript pages served by Spring Boot:
+Login page, Create Ticket page, Active Tickets list, Ticket Detail page with notes.
+
+Folder structure:
+src/main/java/com/crm/controllers
+src/main/java/com/crm/services
+src/main/java/com/crm/repositories
+src/main/java/com/crm/entities
+src/main/java/com/crm/dto
+src/main/java/com/crm/security
+src/main/java/com/crm/config
+src/main/resources/application.properties
+
+Database schema:
+
+Table users: id BIGINT PK, name VARCHAR, email VARCHAR UNIQUE, password VARCHAR, role VARCHAR.
+Table tickets: id BIGINT PK, title VARCHAR, description TEXT, created_by BIGINT FK, assigned_to BIGINT FK, priority VARCHAR, status VARCHAR, created_at TIMESTAMP, updated_at TIMESTAMP.
+Table ticket_notes: id BIGINT PK, ticket_id BIGINT FK, author_id BIGINT FK, message TEXT, type VARCHAR, created_at TIMESTAMP.
+
+Testing:
+Create a Postman collection covering registration, login, create ticket, add note, update status, escalate ticket, list active tickets.
+
+Deliverables required:
+Full Spring Boot project, SQL schema, JWT security configuration, all REST endpoints, optional frontend, instructions to run, sample test data.
