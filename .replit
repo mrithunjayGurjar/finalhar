@@ -1,2 +1,39 @@
+modules = ["java-graalvm22.3"]
 [agent]
 expertMode = true
+
+[nix]
+channel = "stable-25_05"
+packages = ["jdk21", "maven", "mysql80"]
+
+[[ports]]
+localPort = 3306
+externalPort = 3000
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Run CRM Application"
+
+[[workflows.workflow]]
+name = "Run CRM Application"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "./start.sh"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
