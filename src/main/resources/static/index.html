@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM Ticketing System</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CRM Ticketing System</h1>
+            <div id="user-info" class="hidden">
+                <span id="user-name"></span>
+                <button onclick="logout()">Logout</button>
+            </div>
+        </header>
+
+        <!-- Login/Register Section -->
+        <div id="auth-section">
+            <div class="auth-tabs">
+                <button class="tab-btn active" onclick="showTab('login')">Login</button>
+                <button class="tab-btn" onclick="showTab('register')">Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="login-form" class="auth-form">
+                <h2>Login</h2>
+                <input type="email" id="login-email" placeholder="Email" required>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button onclick="login()">Login</button>
+                <div id="login-error" class="error-message"></div>
+            </div>
+
+            <!-- Register Form -->
+            <div id="register-form" class="auth-form hidden">
+                <h2>Register</h2>
+                <input type="text" id="register-name" placeholder="Full Name" required>
+                <input type="email" id="register-email" placeholder="Email" required>
+                <input type="password" id="register-password" placeholder="Password" required>
+                <select id="register-role">
+                    <option value="USER">User</option>
+                    <option value="AGENT">Agent</option>
+                    <option value="MANAGER">Manager</option>
+                </select>
+                <button onclick="register()">Register</button>
+                <div id="register-error" class="error-message"></div>
+            </div>
+        </div>
+
+        <!-- Main Application Section -->
+        <div id="app-section" class="hidden">
+            <div class="app-tabs">
+                <button class="app-tab-btn active" onclick="showAppTab('tickets')">My Tickets</button>
+                <button class="app-tab-btn" onclick="showAppTab('create')">Create Ticket</button>
+                <button class="app-tab-btn" onclick="showAppTab('active')">Active Tickets</button>
+            </div>
+
+            <!-- Create Ticket Section -->
+            <div id="create-ticket" class="app-content hidden">
+                <h2>Create New Ticket</h2>
+                <input type="text" id="ticket-title" placeholder="Title" required>
+                <textarea id="ticket-description" placeholder="Description" rows="4"></textarea>
+                <select id="ticket-priority">
+                    <option value="LOW">Low</option>
+                    <option value="MEDIUM">Medium</option>
+                    <option value="HIGH">High</option>
+                    <option value="CRITICAL">Critical</option>
+                </select>
+                <button onclick="createTicket()">Create Ticket</button>
+                <div id="create-error" class="error-message"></div>
+            </div>
+
+            <!-- Tickets List Section -->
+            <div id="tickets-list" class="app-content">
+                <h2>My Tickets</h2>
+                <div id="tickets-container"></div>
+            </div>
+
+            <!-- Active Tickets Section -->
+            <div id="active-tickets" class="app-content hidden">
+                <h2>Active Tickets</h2>
+                <div id="active-tickets-container"></div>
+            </div>
+
+            <!-- Ticket Details Modal -->
+            <div id="ticket-modal" class="modal hidden">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <div id="ticket-details"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
