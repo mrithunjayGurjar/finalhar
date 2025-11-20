@@ -30,4 +30,4 @@ else
 fi
 
 echo "Starting Spring Boot application..."
-java -jar "$(pwd)/target/ticketing-system-1.0.0.jar"
+java -jar target/ticketing-system-1.0.0.jar
